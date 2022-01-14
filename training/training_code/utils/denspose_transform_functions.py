@@ -20,7 +20,6 @@ IMAGE_WIDTH = 256 # 이미지 세로 크기
 #compute_dp_tr_3d_2d_loss2(d_i,d_j,i_r1_c1_r2_c2,i_limit,C,R,Rt,cen,K,Ki,origin,scaling): 3차원 좌표끼리의 loss와 그 3차원 좌표를 reprojection한 좌표끼리의 loss를 모두 출력한다. 그리고 예측한 좌표와 실제 좌표도 출력한다.
 # *****************************************************************************************************
 
-
 def rigid_transform_3D(A,B):# B는 warping function에 의해 예측된 p값, A는 i번째 instance의 p값이다. 그리고 이 함수는 그에 맞는 R과 T를 내보낸다.
     A = tf.transpose(A) #3*N, tf.transpose는 matrix에 transpose를 시켜준다.
     B = tf.transpose(B) #3*N, B=R*A+T이다.
