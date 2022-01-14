@@ -36,7 +36,7 @@ def write_prediction_normal(Vis_dir,prediction,i,idx,Z_r1):
 
 # **********************************************************************************************************
 def nmap_normalization(nmap_batch): #nmap normalization
-    image_mag = np.expand_dims(np.sqrt(np.square(nmap_batch).sum(axis=2)),-1)   #
+    image_mag = np.expand_dims(np.sqrt(np.square(nmap_batch).sum(axis=2)),-1)#
     image_unit = np.divide(nmap_batch,image_mag)
     return image_unit  #이게 되나?
 
@@ -254,20 +254,20 @@ def get_tiktok_patch(tk_path, Bsize, IMAGE_HEIGHT,IMAGE_WIDTH):#titok data를 �
     corr_mat = np.genfromtxt(tk_path +'/correspondences/corr_mat.txt',delimiter=",")#79x5 matrix, np.genfromtxt(,delimiter=",")을 사용하여 "," 구분이 열이고, enter가 행으로 matrix를 받아온다.
     corr_path = tk_path +'/correspondences/'#
     num_of_neighbors = np.shape(corr_mat)[1]-1#일단 열이 5이기에 5-1=4
-    image_nums = corr_mat[:,0].tolist()#list로 바꿔주는 함수인 tolist() 덕분에 일단 첫번째 
-    num_of_ims = len(image_nums)
-    frms_nums = np.random.choice(num_of_ims, Bsize).tolist()
-    frms= []
+    image_nums = corr_mat[:,0].tolist()#list로 바꿔주는 함수인 tolist() 덕분에 일단 corr_mat의 첫번째 열을 (79,) list로 image_nums에 저장한다.
+    num_of_ims = len(image_nums)#len()은 리스트의 크기를 출력하는 함수이기에 79가 나온다.
+    frms_nums = np.random.choice(num_of_ims, Bsize).tolist()#그리고 0~78중에 batch size만큼 무작위로 숫자를 고르고 tolis()로 고른 숫자를 리스트로 만든다.
+    frms= []#일단 배열을 다 선언해둔다.
     frms_neighbor = []
     bi_r1_c1_r2_c2 = []
     bi_limit = []
-    for f in range(len(frms_nums)):
-        row = frms_nums[f]
-        frm = image_nums[row]
-        frms = frms + [frm]
+    for f in range(len(frms_nums)):#list(range(3))=[0, 1, 2]이다. 따라서 range(batch_size)이기에 batch당 한번씩 for문이 돈다.
+        row = frms_nums[f]#f번 batch에 있는 frame의 number
+        frm = image_nums[row]#frame number에 해당하는 image의 number
+        frms = frms + [frm]#그리고 그 image의 number를 list에 차곡차곡 저장한다.
         
-        neighbor_choice = np.random.choice(num_of_neighbors, 1)[0] + 1
-        nfrm = corr_mat[row,neighbor_choice]
+        neighbor_choice = np.random.choice(num_of_neighbors, 1)[0] + 1#그리고 0,1,2,3 중에 하나를 random으로 뽑고 그 요소에 1을 더해서 neighbor_choice에 저장한다.
+        nfrm = corr_mat[row,neighbor_choice]#
         frms_neighbor = frms_neighbor + [nfrm]
         
         i_r1_c1_r2_c2n_f,i_limitn = read_correspondences_dp(frm,nfrm,corr_path)
