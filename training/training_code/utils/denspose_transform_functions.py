@@ -20,18 +20,6 @@ IMAGE_WIDTH = 256 # 이미지 세로 크기
 #compute_dp_tr_3d_2d_loss2(d_i,d_j,i_r1_c1_r2_c2,i_limit,C,R,Rt,cen,K,Ki,origin,scaling): 3차원 좌표끼리의 loss와 그 3차원 좌표를 reprojection한 좌표끼리의 loss를 모두 출력한다. 그리고 예측한 좌표와 실제 좌표도 출력한다.
 # *****************************************************************************************************
 
-
-# *****************************************************************************************************
-#rigid_transform_3D(A,B): A와 B, 2개의 correspondence 좌표가 있을 때 그에 맞는 R과 T는 출력하는 함수
-#get_pc_transformation2(p1,p2):rigid_transform_3D(p1, p2)사용 p1과 p2를 받으면 그것에 대한 R과 t, 그리고 받은 R과 t를 사용해서 예측한 p1_2를 output으로 내보낸다.
-#Depth2Points3D_transformed_vector(Dlambda, indices , Rt, Ki, cen, origin, scaling): depth 정보(Dlambda), 미리 define한 점들의 index 정보인 indices에 x,y좌표 정보가 있고, camera intrinsic parameter Rt, Ki, cen, scaling factor 들을 받아서 3D reconstruction 점을 출력으로 내보낸다.
-#part_transformation2(i_limit,PC1,PC2,p): get_pc_transformation2(p1, p2)을 사용해서 p1_2를 받고, 그 p2를 p2p로 저장해서 p2p와 p1_2를 보두 출력으로 뱉는다.
-#transform_depth_PCs_dp_based2(C,R,Rt,cen,K,Ki,origin,scaling,d_i,d_j,i_r1_c1_r2_c2,i_limit): j번쨰 time instant의 실제 좌표와 warping function으로 예측한 좌표의 값을 출력하는 함수
-#reproject(point3D, K,R,C): 3차원 좌표를 다시 2차원으로 reproject하는 것을 의미한다.
-#compute_dp_tr_3d_2d_loss2(d_i,d_j,i_r1_c1_r2_c2,i_limit,C,R,Rt,cen,K,Ki,origin,scaling): 3차원 좌표끼리의 loss와 그 3차원 좌표를 reprojection한 좌표끼리의 loss를 모두 출력한다. 그리고 예측한 좌표와 실제 좌표도 출력한다.
-# *****************************************************************************************************
-
-
 def rigid_transform_3D(A,B):# B는 warping function에 의해 예측된 p값, A는 i번째 instance의 p값이다. 그리고 이 함수는 그에 맞는 R과 T를 내보낸다.
     A = tf.transpose(A) #3*N, tf.transpose는 matrix에 transpose를 시켜준다.
     B = tf.transpose(B) #3*N, B=R*A+T이다.
