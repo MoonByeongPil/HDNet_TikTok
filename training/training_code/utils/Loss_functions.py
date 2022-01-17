@@ -131,7 +131,4 @@ def calc_loss_d_refined_mask(output, y, z_refined):
 
 #여기에 뭔가를 추가!
 
-
-#1.17123
-#23sdfdsfsd
-#sdalgjio;dffg내가 잘못했다.
+#최종본 수정 완료
