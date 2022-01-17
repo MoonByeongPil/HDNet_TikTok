@@ -44,10 +44,10 @@ def calc_loss_normal(output, y_normal,z_refined):   #Normal에 대한 loss를 �
     output_mask = tf.abs(output) < 1e-5 #output의 절댓값이 10의 -5승보다 작으면 mask에 bool로 저장.
     output_no0 = tf.where(output_mask, 1e-5*tf.ones_like(output), output)   #위의 마스크가 true인 경우에는 10 -5승을 입력으로 넣어줌. false면 output의 값을 넣어줌.
     output_mag = tf.expand_dims(tf.sqrt(tf.reduce_sum(tf.square(output_no0),3)),-1) #위의 행렬 요소 제곱 -> 3이라는 축(4번째로 큰 축=1차원)으로 더해줌 최소 4차원-> 모든 요소에 root. -1은 가장 안쪽 차원 추가(가장 작은 차원)
-    output_unit = tf.divide(output_no0,output_mag)  #요소별 나눗셈 진행 ==> 말 그대로 normalize
+    output_unit = tf.divide(output_no0,output_mag)  #요소별 나눗셈 진행 ==> 말 그대로 normalize: 가장 낮은 차원의 요소들을 하나의 벡터로 보면 가장 낮은 차원의 벡터는 크기가 모두 1로 만들어줌.
 
-    z_mask = z_refined[...,0]   #
-    a11 = tf.boolean_mask(tf.reduce_sum(tf.square(output_unit),3),z_mask)
+    z_mask = z_refined[...,0]   #가장 낮은 차원을 없애면서 가장 낮은 차원의 수들 중 가장 앞에 있는 수 추출.
+    a11 = tf.boolean_mask(tf.reduce_sum(tf.square(output_unit),3),z_mask)   #
     a22 = tf.boolean_mask(tf.reduce_sum(tf.square(y_normal),3),z_mask)
     a12 = tf.boolean_mask(tf.reduce_sum(tf.multiply(output_unit,y_normal),3),z_mask)
 
