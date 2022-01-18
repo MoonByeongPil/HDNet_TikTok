@@ -16,7 +16,7 @@ def depth2points3D_MB(output, Rt, Ki, cen, z_r, origin, scaling):
     # Rt and Ki are 3*3, cen is 1*3, z_r and output are B*256*256, origin is B*2, scaling is B*1
     # point3D is 3*N
     
-    ones_mat = tf.cast(tf.ones_like(z_r), tf.bool)#tf.ones_like(z_r)은 z_r과 같은 형태의 모든 요소가 1인 matrix이고, tf.bool로 typecasting한다.z_r은 B*256*256인데 B가 batch의 수라고 추정된다.
+    ones_mat = tf.cast(tf.ones_like(z_r), tf.bool)#tf.ones_like(z_r)은 z_r과 같은 형태의 모든 요소가 true인 matrix이고, tf.bool로 typecasting한다.z_r은 B*256*256인데 B가 batch의 수라고 추정된다.
     indices = tf.where(ones_mat) #  (256*256*B) x 3 = N x 3, tf.where(ones_mat)은 ones_mat에서 true인 부분의 위치를 출력해주는 함수이다. 그런데 모든 위치가 true이기에 모든 위치에 대한 index가 만들어진다.
 #     indices = tf.where(z_r)
     
@@ -90,7 +90,7 @@ def depth2points3D_MB(output, Rt, Ki, cen, z_r, origin, scaling):
 
 # *********************************************************************************************************
 
-def dmap_to_nmap(Y, Rt, R, Ki, cen, Z, origin, scaling):
+def dmap_to_nmap(Y, Rt, R, Ki, cen, Z, origin, scaling):#Y=Batchsize x Image_Height x Image_Width x 1
     BATCH_SIZE = tf.shape(Y)[0]#Y의 행의 구조를 1-d 정수형 텐서로 반환한다. Y의 행이 batchsize인가보다.
     IMAGE_HEIGHT = tf.shape(Y)[1]#Y의 열의 구조를 1-d 정수형 텐서로 반환한다. Y의 열이 image_height인가보다.
     
