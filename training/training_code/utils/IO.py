@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import os.path
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
-
+#corr_mat, i_r1_c1_r2_c2.txt, i_limit.txt가 무엇인지는 https://github.com/yasaminjafarian/HDNet_TikTok/blob/main/training/README.md 에 있다.
 ## ******************************Write prediction************************************
 
 def write_matrix_txt(a,filename):   #입력된 배열과 파일 이름을 가지고 행렬로 바꾼 뒤 txt파일로 저장해줌. test_data -> infer.out의 txt파일들이 이를 이용해 만들어진다.
